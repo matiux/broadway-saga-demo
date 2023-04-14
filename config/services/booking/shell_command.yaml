@@ -1,0 +1,8 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  SagaDemo\BookingEngine\Infrastructure\Communication\Console\:
+    resource: '%kernel.project_dir%/src/SagaDemo/BookingEngine/Infrastructure/Communication/Console/*'
+    tags: ['console.command']

@@ -1,0 +1,77 @@
+{
+  "type": "project",
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=8.2",
+    "ext-ctype": "*",
+    "ext-iconv": "*",
+    "broadway/broadway-bundle": "^0.6.1",
+    "broadway/event-store-dbal": "^0.6.0",
+    "broadway/saga-state-dbal": "^0.2.0",
+    "doctrine/doctrine-migrations-bundle": "^3.2",
+    "doctrine/orm": "^2.14",
+    "matiux/ddd-starter-pack": "^3.16",
+    "matiux/php-project-autopilot": "dev-master",
+    "symfony/console": "6.2.*",
+    "symfony/dotenv": "6.2.*",
+    "symfony/flex": "^2",
+    "symfony/framework-bundle": "6.2.*",
+    "symfony/runtime": "6.2.*",
+    "symfony/yaml": "6.2.*"
+  },
+  "config": {
+    "allow-plugins": {
+      "php-http/discovery": true,
+      "symfony/flex": true,
+      "symfony/runtime": true
+    },
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src/App/",
+      "SagaDemo\\": "src/SagaDemo/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+    }
+  },
+  "replace": {
+    "symfony/polyfill-ctype": "*",
+    "symfony/polyfill-iconv": "*",
+    "symfony/polyfill-php72": "*",
+    "symfony/polyfill-php73": "*",
+    "symfony/polyfill-php74": "*",
+    "symfony/polyfill-php80": "*",
+    "symfony/polyfill-php81": "*"
+  },
+  "scripts": {
+    "auto-scripts": {
+      "cache:clear": "symfony-cmd",
+      "assets:install %PUBLIC_DIR%": "symfony-cmd"
+    },
+    "post-install-cmd": [
+      "@auto-scripts",
+      "bash vendor/matiux/php-project-autopilot/src/configure.sh"
+    ],
+    "post-update-cmd": [
+      "@auto-scripts",
+      "bash vendor/matiux/php-project-autopilot/src/configure.sh"
+    ]
+  },
+  "conflict": {
+    "symfony/symfony": "*"
+  },
+  "extra": {
+    "symfony": {
+      "allow-contrib": false,
+      "require": "6.2.*"
+    }
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^3.16"
+  }
+}

@@ -1,0 +1,51 @@
+version: '3.9'
+
+volumes:
+  broadway-saga-demo-database-volume: {}
+
+networks:
+  broadway-saga-demo-network:
+    name: broadway-saga-demo-network
+    driver: bridge
+
+services:
+
+  broadway-saga-demo-php:
+    image: broadway-saga-demo-php
+    build: php
+    hostname: saga_demo
+    volumes:
+      - ../:/var/www/app:delegated
+      - ./data/shell_history:/home/utente/shell_history
+    networks:
+      - broadway-saga-demo-network
+    environment:
+      - HISTFILE=/home/utente/shell_history/.x_history
+    secrets:
+      - source: id_rsa
+        target: /home/utente/.ssh/id_rsa
+      - source: id_rsa.pub
+        target: /home/utente/.ssh/id_rsa.pub
+      - source: known_hosts
+        target: /home/utente/.ssh/known_hosts
+
+  broadway-saga-demo-nodejs:
+    image: broadway-saga-demo-nodejs
+    build: nodejs
+    working_dir: /var/www/app
+    volumes:
+      - ../:/var/www/app
+    networks:
+      - broadway-saga-demo-network
+
+  broadway-saga-demo-db:
+    image: mariadb:10.6
+    volumes:
+      - broadway-saga-demo-database-volume:/var/lib/mysql
+#      - ./mysql/custom.cnf:/etc/mysql/conf.d/custom.cnf
+#      - ./data/db:/docker-entrypoint-initdb.d
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=saga_demo_db
+    networks:
+      - broadway-saga-demo-network
